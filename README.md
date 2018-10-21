@@ -1,5 +1,7 @@
 # Snobby Cloud
-Linux on the 2018 Hackaday Supercon Badge
+Linux on the 2018 Hackaday Supercon Badge (PIC32MX370F512L)
+
+This uses the Firmware provided by __
 
 ## Features
 Interfaces with a I2C flash controller for filesystem
