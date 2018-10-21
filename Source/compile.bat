@@ -1,0 +1,73 @@
+@echo off
+REM This compiles the c code for Snobby Cloud Linux
+REM programs required for this to work:
+REM 	microchip's xc32++ compiler suite (used to compile code - duh)
+REM 	pic32prog (used for uploading to the badge with an arduino) see: https://hackaday.io/project/27250-mcu-how-tos-reviews-rants/log/148016-programming-pic32-with-arduino
+REM ---------------------------------------------------------------------------------
+
+REM Booleans 1=True; 0=False
+set PAUSE_AFTER_EACH=0
+set PAUSE_PRE_EXIT=1
+set COMPILE=1
+set CONVERT=1
+set UPLOAD=0
+
+REM Stuff for compilation
+set COMPILER=xc32-gcc.exe
+set HEX_CONVERTER=xc32-bin2hex.exe
+set INTERM_TYPE=.elf
+set OUTPUT_TYPE=.hex
+set PROCESSOR=32MX370F512H
+set HEAP_SIZE=0xF000
+set FILES=main.c badge.c hw.c disp.c vt100.c
+
+REM Stuff for writing to badge
+set BADGE_WRITER=pic32prog.exe
+set COMPORT=COM23
+
+REM Name of the executable
+set OUTPUT_NAME=snobby-cloud-v0.1
+
+
+IF %COMPILE% EQU 1 (
+	echo --------------------------------Compiling Source--------------------------------
+	%COMPILER% -Wl,--defsym=_min_heap_size=%HEAP_SIZE% -mprocessor=%PROCESSOR% %FILES% -o %OUTPUT_NAME%%INTERM_TYPE%
+	echo.
+	echo --------------------------------------Done--------------------------------------
+	IF %PAUSE_AFTER_EACH% EQU 1 (
+		pause
+	) ELSE ( 
+		echo.
+	)
+)
+
+IF %CONVERT% EQU 1 (
+	echo -----------------------------Converting to Hex File-----------------------------
+	%HEX_CONVERTER% %OUTPUT_NAME%%INTERM_TYPE%
+	echo.
+	echo --------------------------------------Done--------------------------------------
+	IF %PAUSE_AFTER_EACH% EQU 1 (
+		pause
+	) ELSE ( 
+		echo.
+	)
+)
+
+IF %UPLOAD% EQU 1 (
+	echo --------------------------------Writing to Badge--------------------------------
+	%BADGE_WRITER% -d ascii:%COMPORT% %OUTPUT_NAME%%OUTPUT_TYPE%
+	echo.
+	echo --------------------------------------Done--------------------------------------
+	IF %PAUSE_AFTER_EACH% EQU 1 (
+		pause
+	) ELSE ( 
+		echo.
+	)
+)
+
+echo --------------------------------Compile Finished--------------------------------
+IF %PAUSE_PRE_EXIT% EQU 1 (
+	pause
+) ELSE ( 
+	exit
+)
