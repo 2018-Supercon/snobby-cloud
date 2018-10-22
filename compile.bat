@@ -20,6 +20,8 @@ set OUTPUT_TYPE=.hex
 set PROCESSOR=32MX370F512H
 set HEAP_SIZE=0xF000
 set FILES=main.c badge.c hw.c disp.c vt100.c
+set SRC_PATH=Source
+set BIN_PATH=Compiled
 
 REM Stuff for writing to badge
 set BADGE_WRITER=pic32prog.exe
@@ -31,7 +33,9 @@ set OUTPUT_NAME=snobby-cloud-v0.1
 
 IF %COMPILE% EQU 1 (
 	echo --------------------------------Compiling Source--------------------------------
-	%COMPILER% -Wl,--defsym=_min_heap_size=%HEAP_SIZE% -mprocessor=%PROCESSOR% %FILES% -o %OUTPUT_NAME%%INTERM_TYPE%
+	cd %SRC_PATH%
+	%COMPILER% -Wl,--defsym=_min_heap_size=%HEAP_SIZE% -mprocessor=%PROCESSOR% %FILES% -o ..\%BIN_PATH%\%OUTPUT_NAME%%INTERM_TYPE%
+	cd ..\
 	echo.
 	echo --------------------------------------Done--------------------------------------
 	IF %PAUSE_AFTER_EACH% EQU 1 (
@@ -43,7 +47,9 @@ IF %COMPILE% EQU 1 (
 
 IF %CONVERT% EQU 1 (
 	echo -----------------------------Converting to Hex File-----------------------------
+	cd %BIN_PATH%
 	%HEX_CONVERTER% %OUTPUT_NAME%%INTERM_TYPE%
+	cd ..\
 	echo.
 	echo --------------------------------------Done--------------------------------------
 	IF %PAUSE_AFTER_EACH% EQU 1 (
@@ -55,7 +61,9 @@ IF %CONVERT% EQU 1 (
 
 IF %UPLOAD% EQU 1 (
 	echo --------------------------------Writing to Badge--------------------------------
+	cd %BIN_PATH%
 	%BADGE_WRITER% -d ascii:%COMPORT% %OUTPUT_NAME%%OUTPUT_TYPE%
+	cd ..\
 	echo.
 	echo --------------------------------------Done--------------------------------------
 	IF %PAUSE_AFTER_EACH% EQU 1 (
