@@ -1,7 +1,7 @@
 # Snobby Cloud
 Linux on the 2018 Hackaday Supercon Badge (PIC32MX370F512L)
 
-This uses the Firmware provided by __
+This uses the Firmware written by [Jaromir Sukuba](https://github.com/jaromir-sukuba) provided by [Hackaday](https://github.com/Hack-a-Day/basic-badge).
 
 ## Features
 Interfaces with a I2C flash controller for filesystem
