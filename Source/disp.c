@@ -5,8 +5,7 @@
 #include <stdint.h>
 
 
-const int8_t font[(96+128)*12] = 
-{
+const int8_t font[(96+128)*12] = {
 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000,   
 0b0001000, 0b0001000, 0b0001000, 0b0001000, 0b0001000, 0b0001000, 0b0001000, 0b0001000, 0b0000000, 0b0001000, 0b0000000, 0b0000000,   
 0b0101000, 0b0101000, 0b0101000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000,   
@@ -240,99 +239,92 @@ const int8_t font[(96+128)*12] =
 0b0000000, 0b0000000, 0b0000000, 0b1111111, 0b1111111, 0b1111111, 0b1111111, 0b1111111, 0b1111111, 0b1111111, 0b0000000, 
 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 0b0000000, 
 0b0000000, 0b0000000, 0b0000000,
-
-
-	};
+};
 
 
 uint32_t color_table[16] = {
-	0x000000,	//0
-	0x0000AA,	//1
-	0x00AA00,	//2
-	0x00AAAA,	//3
-	0xAA0000,	//4
-	0xAA00AA,	//5
-	0xAA5500,	//6
-	0xAAAAAA,	//7
-	0x555555,	//8
-	0x5555FF,	//9
-	0x55FF55,	//10
-	0x55FFFF,	//11
-	0xFF5555,	//12
-	0xFF55FF,	//13
-	0xFFFF55,	//14
-	0xFFFFFF,	//15	
-	
-	};
+	0x000000,	//0		// Black
+	0x0000AA,	//1		// Dark Blue
+	0x00AA00,	//2		// Dark Green
+	0x00AAAA,	//3		// Dark Cyan
+	0xAA0000,	//4		// Dark Red
+	0xAA00AA,	//5		// Dark Magenta
+	0xAA5500,	//6		// Dark Orange
+	0xAAAAAA,	//7		// Gray
+	0x555555,	//8		// Dark Gray
+	0x5555FF,	//9		// Light Blue
+	0x55FF55,	//10	// Light Green
+	0x55FFFF,	//11	// Light Cyan
+	0xFF5555,	//12	// Light Red
+	0xFF55FF,	//13	// Light Magenta
+	0xFFFF55,	//14	// Light Yellow
+	0xFFFFFF,	//15	// White
+};
 
 uint16_t cursor_blink_cnt;
 uint8_t cursor_blink_state, cursor_visible;
 
 
-void set_cursor_state (uint8_t state)
-	{
-	if (state==0)
+void set_cursor_state (uint8_t state){
+	if (state==0){
 		cursor_visible = 0;
-	else
+	}else{
 		cursor_visible = 1;
 	}
+}
 
-void disp_tasks (void)
-	{
+void disp_tasks (void){
 	cursor_blink_cnt++;
-	if (cursor_blink_cnt> 40)
-		{
+	if (cursor_blink_cnt> 40){
 		cursor_blink_cnt = 0;
-		if (cursor_blink_state)
+		if (cursor_blink_state){
 			cursor_blink_state = 0;
-		else
+		}else{
 			cursor_blink_state = 1;
 		}
 	}
+}
 
-void tft_disp_buffer_refresh(uint8_t * buff, uint8_t * color_buff)
-	{
+void tft_disp_buffer_refresh(uint8_t * buff, uint8_t * color_buff){
 	uint16_t i,j,ad,col,back,cur_x,cur_y;
 	cur_x = video_getx();
 	cur_y = video_gety();
-	for (i=0;i<20;i++)
-		for (j=0;j<40;j++)	
-			{
+	for (i=0;i<20;i++){
+		for (j=0;j<40;j++){
 			col = color_buff[j+(i*40)]&0xF;
 			back = (color_buff[j+(i*40)]>>4)&0xF;
-			if ((cur_x==j)&(cur_y==i)&(cursor_blink_state==1)&(cursor_visible!=0))
+			if ((cur_x==j)&(cur_y==i)&(cursor_blink_state==1)&(cursor_visible!=0)){
 				tft_print_char(219,j*8,i*12,color_table[15],color_table[back]);
-			else
+			}else{
 				tft_print_char(buff[j+(i*40)],j*8,i*12,color_table[col],color_table[back]);
 			}
+		}
 	}
+}
 
-void tft_disp_buffer_refresh_part(uint8_t * buff, uint8_t * color_buff)
-	{
+void tft_disp_buffer_refresh_part(uint8_t * buff, uint8_t * color_buff){
     static uint8_t dr_cnt=0,col,back,cur_x,cur_y;
 	uint16_t i,j,ad;
 	cur_x = video_getx();
 	cur_y = video_gety();
-	for (i=(dr_cnt);i<(dr_cnt+2);i++)
-		for (j=0;j<40;j++)	
-			{
+	for (i=(dr_cnt);i<(dr_cnt+2);i++){
+		for (j=0;j<40;j++)	{
 			col = color_buff[j+(i*40)]&0xF;
 			back = (color_buff[j+(i*40)]>>4)&0xF;
-			if ((cur_x==j)&(cur_y==i)&(cursor_blink_state==1)&(cursor_visible!=0))
+			if ((cur_x==j)&(cur_y==i)&(cursor_blink_state==1)&(cursor_visible!=0)){
 				tft_print_char(219,j*8,i*12,color_table[15],color_table[back]);
-			else
+			}else{
 				tft_print_char(buff[j+(i*40)],j*8,i*12,color_table[col],color_table[back]);
 			}
+		}
+	}
     dr_cnt = dr_cnt + 2;
-    if (dr_cnt == 20)
+    if (dr_cnt == 20){
         dr_cnt = 0;
+	}
+}
 
-    }
-
-
-
-inline void tft_print_char (uint8_t val, uint16_t x, uint16_t y, uint32_t col, uint32_t back)
-	{
+inline void tft_print_char (uint8_t val, uint16_t x, uint16_t y, uint32_t col, uint32_t back){
 	uint16_t fl,i,j;
 	uint16_t c1,c2,c3,b1,b2,b3;
 	c1 = (col>>16)&0xFF;
@@ -343,10 +335,8 @@ inline void tft_print_char (uint8_t val, uint16_t x, uint16_t y, uint32_t col, u
 	b3 = (back>>0)&0xFF;
 	tft_set_write_area(x,y,7,11);
 	TFT_24_7789_Write_Command(0x2C);
-	if (val<' ')
-		{
-		for (i=0;i<12;i++)
-			{
+	if (val<' '){
+		for (i=0;i<12;i++){
 			TFT_24_7789_Write_Data3(b1,b2,b3);
 			TFT_24_7789_Write_Data3(b1,b2,b3);
 			TFT_24_7789_Write_Data3(b1,b2,b3);
@@ -355,13 +345,9 @@ inline void tft_print_char (uint8_t val, uint16_t x, uint16_t y, uint32_t col, u
 			TFT_24_7789_Write_Data3(b1,b2,b3);
 			TFT_24_7789_Write_Data3(b1,b2,b3);
 			TFT_24_7789_Write_Data3(b1,b2,b3);
-			}
-				
 		}
-	else
-		{
-		for (i=0;i<12;i++)
-			{
+	}else{
+		for (i=0;i<12;i++){
 			fl = font[i+12*(val-' ')];
 			if (fl&0x80)
 				TFT_24_7789_Write_Data3(c1,c2,c3);
@@ -395,25 +381,22 @@ inline void tft_print_char (uint8_t val, uint16_t x, uint16_t y, uint32_t col, u
 				TFT_24_7789_Write_Data3(c1,c2,c3);
 			else
 				TFT_24_7789_Write_Data3(b1,b2,b3);	
-			}
 		}
 	}
+}
 
 
-void tft_fill_area (uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen, uint32_t back)
-{
+void tft_fill_area (uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen, uint32_t back){
     uint32_t i,j;
     tft_set_write_area(x,y,xlen,ylen);
     TFT_24_7789_Write_Command(0x2C);
     //FIXME: Why do I need these +1 adjustments. Off-by-one in tft_set_write_area?
-    for (i=0; i<((xlen+1)*(ylen+1)); i++)
-    {
-	TFT_24_7789_Write_Data3((back>>16)&0xFF,(back>>8)&0xFF,(back>>0)&0xFF);
+    for (i=0; i<((xlen+1)*(ylen+1)); i++){
+		TFT_24_7789_Write_Data3((back>>16)&0xFF,(back>>8)&0xFF,(back>>0)&0xFF);
     }
 }
 
-inline void tft_set_write_area (uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen)
-	{
+inline void tft_set_write_area (uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen){
 	TFT_24_7789_Write_Command(0x002A);
 	TFT_24_7789_Write_Data((x>>8)&0xFF);
 	TFT_24_7789_Write_Data((x>>0)&0xFF);
@@ -424,30 +407,27 @@ inline void tft_set_write_area (uint16_t x, uint16_t y, uint16_t xlen, uint16_t 
 	TFT_24_7789_Write_Data((y>>0)&0xFF);
 	TFT_24_7789_Write_Data(((y+ylen)>>8)&0xFF);
 	TFT_24_7789_Write_Data(((y+ylen)>>0)&0xFF);
-	}
+}
 
 
 
 /*******************************************************************************/
-void TFT_24_7789_Write_Command(uint16_t command)
-	{
+void TFT_24_7789_Write_Command(uint16_t command){
 	LCD_RD = 1;
 	LCD_DC = 0;
 	LCD_WR_CLR;
 	LCD_PORT = command;
 	LCD_WR_SET;
 	LCD_DC = 1;
-	}
+}
 /*******************************************************************************/
-inline void TFT_24_7789_Write_Data(uint16_t data1)
-	{
+inline void TFT_24_7789_Write_Data(uint16_t data1){
 	LCD_WR_CLR;
 	LCD_PORT = data1;
 	LCD_WR_SET;
-	}
+}
 
-inline void TFT_24_7789_Write_Data3(uint16_t data1,uint16_t data2, uint16_t data3)
-	{
+inline void TFT_24_7789_Write_Data3(uint16_t data1,uint16_t data2, uint16_t data3){
 	LCD_WR_CLR;
 	LCD_PORT = data1;
 	LCD_WR_SET;
@@ -457,11 +437,10 @@ inline void TFT_24_7789_Write_Data3(uint16_t data1,uint16_t data2, uint16_t data
 	LCD_WR_CLR;
 	LCD_PORT = data3;
 	LCD_WR_SET;
-	}
+}
 
 /*******************************************************************************/
-void TFT_24_7789_Init(void)
-	{
+void TFT_24_7789_Init(void){
 	LCD_RES = 0;
 	LCD_RD = 1;
 	LCD_WR = 1;
@@ -541,7 +520,6 @@ void TFT_24_7789_Init(void)
 	TFT_24_7789_Write_Command(0x11);
 	TFT_24_7789_Write_Command(0x38);
 	TFT_24_7789_Write_Command(0x13);
-
-	}
+}
 /*******************************************************************************/
 

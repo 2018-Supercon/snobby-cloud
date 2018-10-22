@@ -84,9 +84,9 @@ void wait_1ms (void);
 void wait_ms (uint32_t count);
 uint8_t keyb_tasks (void);
 void hw_init (void);
-void sound_set_note (uint8_t note, uint8_t generator);
-void sound_set_generator (uint16_t period, uint8_t generator);
-void sound_play_notes (uint8_t note1, uint8_t note2, uint8_t note3, uint16_t wait);
+// void sound_set_note (uint8_t note, uint8_t generator);									// Sound Stripped
+// void sound_set_generator (uint16_t period, uint8_t generator);							// Sound Stripped
+// void sound_play_notes (uint8_t note1, uint8_t note2, uint8_t note3, uint16_t wait);		// Sound Stripped
 void hw_sleep (void);
 void (*start_after_wake)(void);
 void wake_return(void);
