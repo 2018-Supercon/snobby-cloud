@@ -100,20 +100,18 @@ void set_led_word (uint8_t val);
 
 
 
-typedef union
-{
-struct
- {
-    unsigned up:1;
-    unsigned dn:1;
-    unsigned lt:1;
-    unsigned rt:1;
-    unsigned ent:1;
-    unsigned col:1;
-    unsigned brk:1;
-    unsigned del:1;
- };
-uint8_t CHAR;
+typedef union{
+	struct{
+		unsigned up:1;
+		unsigned dn:1;
+		unsigned lt:1;
+		unsigned rt:1;
+		unsigned ent:1;
+		unsigned col:1;
+		unsigned brk:1;
+		unsigned del:1;
+	};
+	uint8_t CHAR;
 }kspec_var; 
 
 #define	NEWLINE	0x0A

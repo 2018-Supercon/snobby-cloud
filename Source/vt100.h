@@ -9,13 +9,12 @@
 
 
 
-typedef struct
-{
-  int8_t cx;
-  int8_t cy;
-  uint8_t graphicchars;
-  uint8_t revvideo;
-} termstate_t; 
+typedef struct{
+	int8_t cx;
+	int8_t cy;
+	uint8_t graphicchars;
+	uint8_t revvideo;
+}termstate_t; 
 
 void escseq_process(int8_t c);
 void escseq_process_noncsi(int8_t c);
