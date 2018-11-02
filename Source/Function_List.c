@@ -64,10 +64,10 @@ hard_screen_func		TFT_24_7789_Write_Command(uint16_t command);											// Writ
 hard_screen_func		tft_set_write_area(uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen);				// Sets the available space for the screen
 hard_screen_func		tft_print_char(uint8_t val, uint16_t x, uint16_t y, uint32_t col, uint32_t back);		// ?? Prints a character to the screen ??
 hard_screen_func		tft_fill_area(uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen, uint32_t back);		// ?? Fills area with something ??
-hard_screen_func		tft_disp_buffer_refresh(uint8_t * buff, uint8_t * color_buff);							// 
-hard_screen_func		tft_disp_buffer_refresh_part(uint8_t * buff, uint8_t * color_buff);						// 
-						disp_tasks(void);																		// 
-						set_cursor_state(uint8_t state);														// 
+hard_screen_func		tft_disp_buffer_refresh(uint8_t * buff, uint8_t * color_buff);							// Clears the screen's buffer
+hard_screen_func		tft_disp_buffer_refresh_part(uint8_t * buff, uint8_t * color_buff);						// ?? Clears a part of the screen's buffer ??
+screen_manip			disp_tasks(void);																		// ?? Change how the cursor blinks ??
+screen_manip			set_cursor_state(uint8_t state);														// Weather or not the cursor is shown. 0 for no cursor, 1 for cursor.
 ----------------------- --------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------------------------
 // From vt100.h
 core_func				escseq_process(int8_t c);																// Escape sequence processing
