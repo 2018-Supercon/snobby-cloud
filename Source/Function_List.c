@@ -21,9 +21,9 @@ hard_func				rx_sta(void);																			// ?? Checks if data on serial ??
 hard_func				rx_read(void);																			// Read data on serial receive
 hard_func				tx_write(uint8_t data);																	// Write data to serial transmit
 core_func				stdio_local_buffer_state(void);															// Return 0 if the local buffer is empty, 1 if not
-core_func				stdio_local_buffer_get(void);															// 
-core_func				stdio_local_buffer_put(int8_t data);													// ?? Put data onto the buffer ??
-core_func				stdio_local_buffer_puts(int8_t * data);													// 
+core_func				stdio_local_buffer_get(void);															// Returns the next piece of data in the stdio buffer
+core_func				stdio_local_buffer_put(int8_t data);													// Put data onto the buffer
+core_func				stdio_local_buffer_puts(int8_t * data);													// ?? Put data onto the buffer recursively ??
 						get_user_value(void);																	// ??
 screen_manip			enable_display_scanning(uint8_t onoff);													// Turn display scanning on or off
 core_func				millis(void);																			// Returns number of milliseconds past power on
@@ -39,10 +39,10 @@ hard_func				hw_sleep(void);																			// Set mode for low Power Mode
 hard_func				(*start_after_wake)(void);																// ?? What to do after waking up ??
 hard_func				wake_return(void);																		// What to do upon wake from low Power Mode
 hard_func				set_led(uint8_t led_n, uint8_t led_v);													// Sets LED to led_n color (0-2), and led_v value
-soft_func				get_rnd(void);																			// ?? Random number generator ??
-						exp_set(uint8_t pos, uint8_t val);														// 
-						exp_ddr(uint8_t pos, uint8_t val);														// 
-						exp_get(uint8_t pos);																	// 
+soft_func				get_rnd(void);																			// Random number generator
+hard_func				exp_set(uint8_t pos, uint8_t val);														// Sets data val on physical pin pos (0-3)
+hard_func				exp_ddr(uint8_t pos, uint8_t val);														// Sets direction val on physical pin pos (0-3)
+hard_func				exp_get(uint8_t pos);																	// Returns data from physical pin pos (0-3)
 hard_func				get_led_word(void);																		// Returns the value of the LED word
 hard_func				set_led_word(uint8_t val);																// Sets the value of the LED word
 initialize	 			init_io(uint8_t mode);																	// Initialize the I/O pins on the chip

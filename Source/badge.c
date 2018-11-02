@@ -159,7 +159,9 @@ int8_t stdio_local_buffer_get (void){
 	int8_t retval=0;
 	if (stdio_local_len>0){
 		retval = stdio_local_buff[0];
-		for (i=1;i<STDIO_LOCAL_BUFF_SIZE;i++) stdio_local_buff[i-1] = stdio_local_buff[i];
+		for (i=1;i<STDIO_LOCAL_BUFF_SIZE;i++){
+			stdio_local_buff[i-1] = stdio_local_buff[i];
+		}
 		stdio_local_buff[STDIO_LOCAL_BUFF_SIZE-1]=0;
 		stdio_local_len--;
 	}
