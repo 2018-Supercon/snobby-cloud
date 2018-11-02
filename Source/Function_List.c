@@ -1,8 +1,10 @@
 
 There are four categories of functions:
 -hard_func
+-soft_func
 -initialize
 -screen_manip
+-hard_screen_func
 -core_func
 
 a "??" behind commnets means I have looked and don't know what the function does
@@ -12,15 +14,15 @@ a comment enclosed in "??" means I think but I am not 100% sure
 Category				Funcion Name																			Function Description
 ----------------------- --------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------------------------
 // From badge.h	
-initialize	 			terminal_init(void);																	// Initialize terminal (Not Defined - use term_init())
+N/A			 			terminal_init(void);																	// NOT DEFINED - use term_init()
 core_func				term_k_stat(void);																		// ?? get the status of the terminal key ??
 core_func				term_k_char(int8_t * out);																// ?? Set the character for the terminal prompt ??
 hard_func				rx_sta(void);																			// ?? Checks if data on serial ??
 hard_func				rx_read(void);																			// Read data on serial receive
 hard_func				tx_write(uint8_t data);																	// Write data to serial transmit
-core_func				stdio_local_buffer_state(void);															// 
+core_func				stdio_local_buffer_state(void);															// Return 0 if the local buffer is empty, 1 if not
 core_func				stdio_local_buffer_get(void);															// 
-core_func				stdio_local_buffer_put(int8_t data);													// 
+core_func				stdio_local_buffer_put(int8_t data);													// ?? Put data onto the buffer ??
 core_func				stdio_local_buffer_puts(int8_t * data);													// 
 						get_user_value(void);																	// ??
 screen_manip			enable_display_scanning(uint8_t onoff);													// Turn display scanning on or off
@@ -36,8 +38,8 @@ initialize	 			hw_init(void);																			// Initialize hardware
 hard_func				hw_sleep(void);																			// Set mode for low Power Mode
 hard_func				(*start_after_wake)(void);																// ?? What to do after waking up ??
 hard_func				wake_return(void);																		// What to do upon wake from low Power Mode
-hard_func				set_led(uint8_t led_n, uint8_t led_v);													// Sets LED to led_n color, and led_v value
-						get_rnd(void);																			// ??
+hard_func				set_led(uint8_t led_n, uint8_t led_v);													// Sets LED to led_n color (0-2), and led_v value
+soft_func				get_rnd(void);																			// ?? Random number generator ??
 						exp_set(uint8_t pos, uint8_t val);														// 
 						exp_ddr(uint8_t pos, uint8_t val);														// 
 						exp_get(uint8_t pos);																	// 
@@ -45,25 +47,25 @@ hard_func				get_led_word(void);																		// Returns the value of the LE
 hard_func				set_led_word(uint8_t val);																// Sets the value of the LED word
 initialize	 			init_io(uint8_t mode);																	// Initialize the I/O pins on the chip
 screen_manip			stdio_write(int8_t * data);																// Write null-terminated string to standard output
-						stdio_c(uint8_t data);																	// 
-						stdio_in(uint8_t block);																// 
-						stdio_get_state(void);																	// 
-						stdio_get(int8_t * dat);																// 
+screen_manip			stdio_c(uint8_t data);																	// Write one character to standard output
+N/A						stdio_in(uint8_t block);																// NOT DEFINED
+core_func				stdio_get_state(void);																	// Check if something to read from standard input. zero returned when empty, nonzero when character is available
+core_func				stdio_get(int8_t * dat);																// Get character from stdio. zero when there is nothing to read
 hard_func				serial_flush(void);																		// Clear data on serial
 hard_func				rx_sta(void);																			// ?? Checks if data on serial ??
 hard_func				rx_read(void);																			// Read data on serial receive
 hard_func				tx_write(uint8_t data);																	// Write data to serial transmit
 ----------------------- --------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------------------------
 // From disp.h
-hard_func				TFT_24_7789_Init(void);																	// 
-hard_func				TFT_24_7789_Write_Data(uint16_t data1);													// 
-hard_func				TFT_24_7789_Write_Data3(uint16_t data1,uint16_t data2, uint16_t data3);					// 
-hard_func				TFT_24_7789_Write_Command(uint16_t command);											// 
-hard_func				tft_set_write_area(uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen);				// 
-hard_func				tft_print_char(uint8_t val, uint16_t x, uint16_t y, uint32_t col, uint32_t back);		// 
-hard_func				tft_fill_area(uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen, uint32_t back);		// 
-hard_func				tft_disp_buffer_refresh(uint8_t * buff, uint8_t * color_buff);							// 
-hard_func				tft_disp_buffer_refresh_part(uint8_t * buff, uint8_t * color_buff);						// 
+initialize				TFT_24_7789_Init(void);																	// Initialize the display
+hard_screen_func		TFT_24_7789_Write_Data(uint16_t data1);													// Writes data on the screen's buffer
+hard_screen_func		TFT_24_7789_Write_Data3(uint16_t data1,uint16_t data2, uint16_t data3);					// Writes data on the screen's buffer in a set of 3 
+hard_screen_func		TFT_24_7789_Write_Command(uint16_t command);											// Writes a command to the screen's buffer
+hard_screen_func		tft_set_write_area(uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen);				// Sets the available space for the screen
+hard_screen_func		tft_print_char(uint8_t val, uint16_t x, uint16_t y, uint32_t col, uint32_t back);		// ?? Prints a character to the screen ??
+hard_screen_func		tft_fill_area(uint16_t x, uint16_t y, uint16_t xlen, uint16_t ylen, uint32_t back);		// ?? Fills area with something ??
+hard_screen_func		tft_disp_buffer_refresh(uint8_t * buff, uint8_t * color_buff);							// 
+hard_screen_func		tft_disp_buffer_refresh_part(uint8_t * buff, uint8_t * color_buff);						// 
 						disp_tasks(void);																		// 
 						set_cursor_state(uint8_t state);														// 
 ----------------------- --------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------------------------
