@@ -201,9 +201,15 @@ const uint16_t tone_pr_table[128] =
 	
 uint8_t get_led_word(void){
 	uint8_t retval = 0;
-	if (LED_R) retval = retval | 0x01;
-	if (LED_G) retval = retval | 0x02;
-	if (LED_B) retval = retval | 0x04;
+	if (LED_R){
+		retval = retval | 0x01;
+	}
+	if (LED_G){
+		retval = retval | 0x02;
+	}
+	if (LED_B){
+		retval = retval | 0x04;
+	}
 	return retval;
 }
 

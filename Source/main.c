@@ -6,9 +6,6 @@ uint8_t char_out;
 
 int16_t main(void){
 	hw_init();
-	
-	
-	
 	badge_init();
 	
 	

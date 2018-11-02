@@ -28,10 +28,10 @@ core_func				millis(void);																			// Returns number of milliseconds p
 screen_manip			display_refresh_force(void);															// Force refresh the screen
 screen_manip			clr_buffer(void);																		// Clears display buffer
 ----------------------- --------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------------------------
-// From hw.h
+// From hw.h            
 core_func				wait_1ms(void);																			// Waits 1 millisecond
 core_func				wait_ms(uint32_t count);																// Waits count # of millisecond
-						keyb_tasks(void);																		// ??
+hard_func				keyb_tasks(void);																		// ?? Checks for function keys ??
 initialize	 			hw_init(void);																			// Initialize hardware
 hard_func				hw_sleep(void);																			// Set mode for low Power Mode
 hard_func				(*start_after_wake)(void);																// ?? What to do after waking up ??
@@ -41,8 +41,8 @@ hard_func				set_led(uint8_t led_n, uint8_t led_v);													// Sets LED to l
 						exp_set(uint8_t pos, uint8_t val);														// 
 						exp_ddr(uint8_t pos, uint8_t val);														// 
 						exp_get(uint8_t pos);																	// 
-						get_led_word(void);																		// 
-						set_led_word(uint8_t val);																// 
+hard_func				get_led_word(void);																		// Returns the value of the LED word
+hard_func				set_led_word(uint8_t val);																// Sets the value of the LED word
 initialize	 			init_io(uint8_t mode);																	// Initialize the I/O pins on the chip
 screen_manip			stdio_write(int8_t * data);																// Write null-terminated string to standard output
 						stdio_c(uint8_t data);																	// 
