@@ -62,10 +62,7 @@ const int8_t keys_shift_r[50] = {
 
 int8_t key_char;
 
-/* Sound Stripped
-
-const uint16_t tone_pr_table[128] = 
-	{
+const uint16_t tone_pr_table[128] = {
 	0, //No Note
 	0, //366927, // 0 | C-1 | 8.176Hz
 	0, //346340, // 1 | C?/D?-1 | 8.662Hz
@@ -194,10 +191,7 @@ const uint16_t tone_pr_table[128] =
 	284, // 124 | E9 | 10548.1Hz
 	268, // 125 | F9 | 11175.3Hz
 	253, // 126 | F?/G?9 | 11839.8Hz
-	239, // 127 | G9 | 12543.9Hz
-	};
-
-*/
+};
 	
 uint8_t get_led_word(void){
 	uint8_t retval = 0;
@@ -244,10 +238,9 @@ void set_led (uint8_t led_n, uint8_t led_v){
 }
 
 
-/* Sound Stripped
 
-void sound_play_notes (uint8_t note1, uint8_t note2, uint8_t note3, uint16_t wait)
-	{
+
+void sound_play_notes (uint8_t note1, uint8_t note2, uint8_t note3, uint16_t wait){
 	IEC0bits.T5IE = 0;		//sound is a bit shaky without this
 							//quick hack, needs more debugging
 	sound_set_note(note1,0);
@@ -258,48 +251,44 @@ void sound_play_notes (uint8_t note1, uint8_t note2, uint8_t note3, uint16_t wai
 	sound_set_note(0,1);
 	sound_set_note(0,2);
 	IEC0bits.T5IE = 1;
-	}
+}
 
-void sound_set_note (uint8_t note, uint8_t generator)
-	{
+void sound_set_note (uint8_t note, uint8_t generator){
 	sound_set_generator(tone_pr_table[note],generator);
-	}
+}
 
-void sound_set_generator (uint16_t period, uint8_t generator)
-	{
-	if (generator==0)
-		{
+void sound_set_generator (uint16_t period, uint8_t generator){
+	if (generator==0){
 		T2CONbits.TON = 0;
 		PR2 = period;
 		T2CONbits.TCKPS = 0b011;
-		if (period!=0)
+		if (period!=0){
 			T2CONbits.TON = 1;
-		else
+		}else{
 			GEN_0_PIN = 0;
 		}
-	if (generator==1)
-		{
+	}
+	if (generator==1){
 		T3CONbits.TON = 0;
 		PR3 = period;
 		T3CONbits.TCKPS = 0b011;
-		if (period!=0)
+		if (period!=0){
 			T3CONbits.TON = 1;
-		else
+		}else{
 			GEN_1_PIN = 0;
 		}
-	if (generator==2)
-		{
+	}
+	if (generator==2){
 		T4CONbits.TON = 0;
 		PR4 = period;
 		T4CONbits.TCKPS = 0b011;
-		if (period!=0)
+		if (period!=0){
 			T4CONbits.TON = 1;
-		else
+		}else{
 			GEN_2_PIN = 0;
 		}
 	}
-
-*/
+}
 
 void hw_sleep (void){
 	led_state = get_led_word();
@@ -569,7 +558,7 @@ unsigned char	SPI_dat (uint8_t data){
 uint16_t get_rnd (void){
 	uint32_t  var;
 	static uint32_t  var_prev;
-	var = rnd_var1 + (rnd_var2/2) + rnd_var3 + (var_prev*1103515245) + 12345;
+	var = rnd_var1/2 + rnd_var2 + rnd_var3 + (var_prev*1103515245) + 12345 + (millis() | 0xffff);
 	var = var & 0xFFFF;
 	var_prev = var;
 	return var;

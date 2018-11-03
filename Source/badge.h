@@ -5,6 +5,7 @@
 #include "vt100.h"
 #include "hw.h"
 #include "disp.h"
+#include "my_func.h"
 
 
 void terminal_init(void);
@@ -24,6 +25,8 @@ void enable_display_scanning(uint8_t onoff);
 uint32_t millis(void);
 void display_refresh_force (void);
 void clr_buffer (void);
+
+void boot_animation(void);
 
 #define STDIO_LOCAL_BUFF_SIZE	25
 

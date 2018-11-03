@@ -9,11 +9,10 @@ Interfaces with a I2C flash controller for filesystem
 This is more of a filesystem navigation emulator for now because it doesnt have support for a lot of core linux stuffs
 
 Supported Commands:
-- none yet
+- clear
 
 Commands to Add: (in order of how likely it is to be added)
 - echo
-- clear
 - mkdir
 - rmdir
 - pwd

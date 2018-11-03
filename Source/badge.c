@@ -33,7 +33,7 @@ void badge_init (void){
 	stdio_src = STDIO_LOCAL;
 	// stdio_src = STDIO_TTY1;
 	term_init();
-	set_cursor_state(0);
+	set_cursor_state(1);
 }
 
 //B_BDG004
@@ -236,4 +236,12 @@ uint16_t get_user_value (void){
 
 void display_refresh_force (void){
 	tft_disp_buffer_refresh((uint8_t *)disp_buffer,(uint8_t *)color_buffer);
+}
+
+void boot_animation(void){
+	handle_display = 0; //Shut off auto-scanning of character buffer
+	animate_splash();
+	wait_ms(1000);
+	tft_fill_area(0,0,320,240,0x000000);    //Make display black
+	handle_display = 1; //Go back to character display
 }

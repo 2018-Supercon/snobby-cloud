@@ -25,7 +25,7 @@ set BIN_PATH=Compiled
 
 REM Stuff for writing to badge
 set BADGE_WRITER=pic32prog.exe
-set COMPORT=COM17
+set COMPORT=COM3
 
 REM Name of the executable
 set OUTPUT_NAME=snobby-cloud-v0.1

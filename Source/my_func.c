@@ -3,6 +3,10 @@
 void call_command(uint8_t char_buff[256]){
 	if(strcmp(char_buff,"clear")==0){
 		video_clrscr();
+	}else if(char_buff[0]==0){
+		
+	}else if(strcmp(char_buff,"kelp")==0){
+		stdio_write("Who lives in a pineapple under the sea?\n");
 	}else{
 		switch((char_buff[0] + get_rnd()) & 0x07){
 			case 0:
@@ -41,6 +45,21 @@ void call_command(uint8_t char_buff[256]){
 	
 	
 }
+
+void animate_splash(void){
+	wait_ms(750);
+	uint16_t i;
+	for(i=0; i<2500; i++){
+		tft_fill_area((get_rnd() & 0x1ff), (get_rnd() & 0xff), (get_rnd() & 0x09), (get_rnd() & 0x09), (get_rnd()<<16 | get_rnd()));
+		wait_ms(1);
+		
+	}
+	// sound_play_notes(72, 75, 79, 75);
+	// sound_play_notes(72, 77, 80, 75);
+	// sound_play_notes(71, 74, 79, 75);
+	tft_fill_area(0,0,320,240,0x000000);
+}
+
 
 
 /* void powr_toggle(){

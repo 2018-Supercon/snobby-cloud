@@ -10,8 +10,11 @@ uint8_t char_out, get_stat, single_char;
 int16_t main(void){
 	hw_init();
 	badge_init();
-	stdio_write("Welcome to Snobby Cloud!\n");
 	
+	boot_animation();
+	
+	
+	stdio_write("Welcome to Snobby Cloud!\n");
 	do{
 		uint8_t char_buff[256] = {0};
 		stdio_write("> ");
