@@ -5,5 +5,6 @@
 #include "badge.h"
 
 void call_command(uint8_t char_buff[]);
+void screen_splash(uint32_t color);
 
 #endif

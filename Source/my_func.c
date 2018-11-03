@@ -49,15 +49,173 @@ void call_command(uint8_t char_buff[256]){
 void animate_splash(void){
 	wait_ms(750);
 	uint16_t i;
-	for(i=0; i<2500; i++){
+	for(i=0; i<800; i++){
 		tft_fill_area((get_rnd() & 0x1ff), (get_rnd() & 0xff), (get_rnd() & 0x09), (get_rnd() & 0x09), (get_rnd()<<16 | get_rnd()));
-		wait_ms(1);
-		
+		uint8_t col = (get_rnd() & 0x01);
+		if(col == 1){
+			screen_splash(0);
+		}else{
+			screen_splash(0xffffffff);
+		}
+		wait_ms((get_rnd() & 0x01));
 	}
+	tft_fill_area(0,0,320,240,0xffffffff);
+	screen_splash(0);
+	wait_ms(250);
+	tft_fill_area(0,0,320,240,0);
+	screen_splash(0xffffffff);
 	// sound_play_notes(72, 75, 79, 75);
 	// sound_play_notes(72, 77, 80, 75);
 	// sound_play_notes(71, 74, 79, 75);
 	tft_fill_area(0,0,320,240,0x000000);
+}
+
+
+
+void screen_splash(uint32_t color){
+	uint8_t size = 4, offseth = 100, offsetw = 120;
+	tft_fill_area(offsetw+(size*3), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*4), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*5), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*6), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*7), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*8), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*9), offseth+(size*1), size, size, color);
+
+	tft_fill_area(offsetw+(size*2), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*3), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*4), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*7), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*8), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*9), offseth+(size*2), size, size, color);
+
+	tft_fill_area(offsetw+(size*1), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*2), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*3), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*4), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*8), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*9), offseth+(size*3), size, size, color);
+
+	tft_fill_area(offsetw+(size*1), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*2), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*3), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*4), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*5), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*6), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*9), offseth+(size*4), size, size, color);
+
+	tft_fill_area(offsetw+(size*2), offseth+(size*5), size, size, color);
+	tft_fill_area(offsetw+(size*3), offseth+(size*5), size, size, color);
+	tft_fill_area(offsetw+(size*4), offseth+(size*5), size, size, color);
+	tft_fill_area(offsetw+(size*5), offseth+(size*5), size, size, color);
+	tft_fill_area(offsetw+(size*6), offseth+(size*5), size, size, color);
+	tft_fill_area(offsetw+(size*7), offseth+(size*5), size, size, color);
+
+	tft_fill_area(offsetw+(size*3), offseth+(size*6), size, size, color);
+	tft_fill_area(offsetw+(size*4), offseth+(size*6), size, size, color);
+	tft_fill_area(offsetw+(size*5), offseth+(size*6), size, size, color);
+	tft_fill_area(offsetw+(size*6), offseth+(size*6), size, size, color);
+	tft_fill_area(offsetw+(size*7), offseth+(size*6), size, size, color);
+	tft_fill_area(offsetw+(size*8), offseth+(size*6), size, size, color);
+	
+	tft_fill_area(offsetw+(size*1), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*5), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*6), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*7), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*8), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*9), offseth+(size*7), size, size, color);
+
+	tft_fill_area(offsetw+(size*1), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*2), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*6), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*7), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*8), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*9), offseth+(size*8), size, size, color);
+
+	tft_fill_area(offsetw+(size*1), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*2), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*3), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*6), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*7), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*8), offseth+(size*9), size, size, color);
+
+	tft_fill_area(offsetw+(size*1), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*2), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*3), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*4), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*5), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*6), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*7), offseth+(size*10), size, size, color);
+
+
+
+
+
+	tft_fill_area(offsetw+(size*12), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*14), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*15), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*16), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*17), offseth+(size*1), size, size, color);
+	tft_fill_area(offsetw+(size*18), offseth+(size*1), size, size, color);
+
+	tft_fill_area(offsetw+(size*11), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*12), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*16), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*17), offseth+(size*2), size, size, color);
+	tft_fill_area(offsetw+(size*18), offseth+(size*2), size, size, color);
+
+	tft_fill_area(offsetw+(size*10), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*11), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*12), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*17), offseth+(size*3), size, size, color);
+	tft_fill_area(offsetw+(size*18), offseth+(size*3), size, size, color);
+
+	tft_fill_area(offsetw+(size*10), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*11), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*12), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*4), size, size, color);
+	tft_fill_area(offsetw+(size*18), offseth+(size*4), size, size, color);
+
+	tft_fill_area(offsetw+(size*10), offseth+(size*5), size, size, color);
+	tft_fill_area(offsetw+(size*11), offseth+(size*5), size, size, color);
+	tft_fill_area(offsetw+(size*12), offseth+(size*5), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*5), size, size, color);
+
+	tft_fill_area(offsetw+(size*10), offseth+(size*6), size, size, color);
+	tft_fill_area(offsetw+(size*11), offseth+(size*6), size, size, color);
+	tft_fill_area(offsetw+(size*12), offseth+(size*6), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*6), size, size, color);
+
+	tft_fill_area(offsetw+(size*10), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*11), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*12), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*7), size, size, color);
+	tft_fill_area(offsetw+(size*18), offseth+(size*7), size, size, color);
+
+	tft_fill_area(offsetw+(size*10), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*11), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*12), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*17), offseth+(size*8), size, size, color);
+	tft_fill_area(offsetw+(size*18), offseth+(size*8), size, size, color);
+
+	tft_fill_area(offsetw+(size*11), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*12), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*16), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*17), offseth+(size*9), size, size, color);
+	tft_fill_area(offsetw+(size*18), offseth+(size*9), size, size, color);
+
+	tft_fill_area(offsetw+(size*12), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*13), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*14), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*15), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*16), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*17), offseth+(size*10), size, size, color);
+	tft_fill_area(offsetw+(size*18), offseth+(size*10), size, size, color);
 }
 
 
