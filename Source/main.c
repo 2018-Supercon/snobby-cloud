@@ -1,34 +1,48 @@
 #include <xc.h>
 #include "badge.h"
 #include "hw.h"
+#include "disp.h"
+#include "my_func.h"
 
-uint8_t char_out;
+uint8_t char_out, get_stat, single_char;
+
 
 int16_t main(void){
 	hw_init();
 	badge_init();
+	stdio_write("Welcome to Snobby Cloud!\n");
 	
-	
-	stdio_write("keyboard repeater\n");
-	while (1){
-		uint8_t get_stat = stdio_get(&char_out);	// Get key status
-		if (get_stat!=0){
-			stdio_c(char_out);						// If there is any data print it
-			
-			
-			
-			
-			
-
-			set_led(((char_out>>1)&0x03),char_out&0x01);
-			
-			
-			
-			
-			
-			
-			video_set_color(15,char_out);	//set some funny color next time
-		}
-	}
+	do{
+		uint8_t char_buff[256] = {0};
+		stdio_write("> ");
+		single_char = 0;
+		char_out = 0;
+		do{
+			get_stat = stdio_get(&char_out);
+			if (get_stat!=0){
+				if(char_out!=K_ENT){
+					char_buff[single_char] = char_out;
+				}
+				if(single_char >= 0 && char_out!=BACKSPACE){
+					stdio_c(char_out);
+					single_char++;
+				}else if(single_char > 0 && char_out==BACKSPACE){
+					stdio_c(char_out);
+					single_char--;
+				}
+			}
+		}while(char_out!=K_ENT);
+		// int i;
+		// for(i=0; i<single_char; i++){
+			// stdio_c(char_buff[i]);
+		// }
+		// stdio_c('\n');
+		
+		
+		call_command(char_buff);
+		
+		
+	}while(1);
 }
 
+// 

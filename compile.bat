@@ -7,10 +7,10 @@ REM ----------------------------------------------------------------------------
 
 REM Booleans 1=True; 0=False
 set PAUSE_AFTER_EACH=0
-set PAUSE_PRE_EXIT=1
+set PAUSE_PRE_EXIT=0
 set COMPILE=1
 set CONVERT=1
-set UPLOAD=0
+set UPLOAD=1
 
 REM Stuff for compilation
 set COMPILER=xc32-gcc.exe
@@ -19,18 +19,18 @@ set INTERM_TYPE=.elf
 set OUTPUT_TYPE=.hex
 set PROCESSOR=32MX370F512H
 set HEAP_SIZE=0xF000
-set FILES=main.c badge.c hw.c disp.c vt100.c
+set FILES=main.c badge.c hw.c disp.c vt100.c my_func.c
 set SRC_PATH=Source
 set BIN_PATH=Compiled
 
 REM Stuff for writing to badge
 set BADGE_WRITER=pic32prog.exe
-set COMPORT=COM23
+set COMPORT=COM17
 
 REM Name of the executable
 set OUTPUT_NAME=snobby-cloud-v0.1
 
-
+cls
 IF %COMPILE% EQU 1 (
 	echo --------------------------------Compiling Source--------------------------------
 	cd %SRC_PATH%
@@ -44,7 +44,7 @@ IF %COMPILE% EQU 1 (
 		echo.
 	)
 )
-
+pause
 IF %CONVERT% EQU 1 (
 	echo -----------------------------Converting to Hex File-----------------------------
 	cd %BIN_PATH%
@@ -76,6 +76,4 @@ IF %UPLOAD% EQU 1 (
 echo --------------------------------Compile Finished--------------------------------
 IF %PAUSE_PRE_EXIT% EQU 1 (
 	pause
-) ELSE ( 
-	exit
-)
+) 

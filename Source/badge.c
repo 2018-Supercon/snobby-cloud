@@ -28,11 +28,12 @@ int8_t color_buffer[DISP_BUFFER_HIGH+1][DISP_BUFFER_WIDE];
 
 void badge_init (void){
 	// B_BDG009
+	start_after_wake =0;
 	ticks = 0;
 	stdio_src = STDIO_LOCAL;
 	// stdio_src = STDIO_TTY1;
 	term_init();
-	set_cursor_state(1);
+	set_cursor_state(0);
 }
 
 //B_BDG004

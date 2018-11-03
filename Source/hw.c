@@ -42,22 +42,22 @@ const int8_t keys_normal[50] = {
 	'3','4','2','5','1','9','6','7','0','8',
 	'e','r','w','t','q','o','y','u','p','i',
 	's','d','a','f','/','k','g','h','l','j',
-	'x','c','z','v',' ',0x2c,'b','n','.','m',
+	'x','c','z','v',' ',',','b','n','.','m',
 	K_DN,K_RT,K_LT,';',K_UP,K_DEL,'=',K_ENT,BACKSPACE,'-',
 };
 const int8_t keys_shift_l[50] = {
-	'#','$','@','%','!','(',' ','&',')','*',
+	'#','$','@','%','!','(','\'','&',')','*',
 	'E','R','W','T','Q','O','Y','U','P','I',
 	'S','D','A','F','?','K','G','H','L','J',
 	'X','C','Z','V',' ','<','B','N','>','M',
-	K_DN,K_RT,K_LT,':',K_UP,K_DEL,'+',K_ECR,BACKSPACE,'"',
+	'\\',K_RT,K_LT,':','|',K_DEL,'+',K_ECR,BACKSPACE,'"',
 };
 const int8_t keys_shift_r[50] = {
-	'#','$','@','%','!','(',' ','&',')','*',
+	'#','$','@','%','!','(','\'','&',')','*',
 	'E','R','W','T','Q','O','Y','U','P','I',
 	'S','D','A','F','?','K','G','H','L','J',
 	'X','C','Z','V',' ','<','B','N','>','M',
-	K_DN,K_RT,K_LT,':',K_UP,K_DEL,'+',K_ECR,BACKSPACE,'_',
+	'\\',K_RT,K_LT,':','|',K_DEL,'+',K_ECR,BACKSPACE,'_',
 };
 
 int8_t key_char;
@@ -569,7 +569,7 @@ unsigned char	SPI_dat (uint8_t data){
 uint16_t get_rnd (void){
 	uint32_t  var;
 	static uint32_t  var_prev;
-	var = rnd_var1 + rnd_var2 + rnd_var3 + (var_prev*1103515245) + 12345;
+	var = rnd_var1 + (rnd_var2/2) + rnd_var3 + (var_prev*1103515245) + 12345;
 	var = var & 0xFFFF;
 	var_prev = var;
 	return var;
