@@ -759,3 +759,28 @@ void fl_write_4k(uint32_t  addr, uint8_t * data){
 
 
 
+
+
+
+
+uint8_t flash_read(uint32_t addr){
+	uint8_t data;
+	CS_FLASH = 0;
+	SPI_dat(0x03);
+	SPI_dat((addr>>16)&0xFF);
+	SPI_dat((addr>>8)&0xFF);
+	SPI_dat((addr>>0)&0xFF);
+	data = SPI_dat(0xFF);
+	CS_FLASH = 1;
+	return data;
+}
+void flash_write(uint32_t addr, uint8_t data){
+	fl_wren();
+	CS_FLASH = 0;
+	SPI_dat(0x02);
+	SPI_dat((addr>>16)&0xFF);
+	SPI_dat((addr>>8)&0xFF);
+	SPI_dat((addr>>0)&0xFF);
+	SPI_dat(data);
+	CS_FLASH = 1;
+}

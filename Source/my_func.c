@@ -4,7 +4,7 @@ void call_command(uint8_t char_buff[256]){
 	uint8_t command[16] = {0};
 	uint8_t i;
 	for(i=0;i<16;++i){
-		if(char_buff[i] == ' '){
+		if(char_buff[i] == ' ' || char_buff[i] == 0){
 			break;
 		}else{
 			command[i] = char_buff[i];
@@ -16,17 +16,17 @@ void call_command(uint8_t char_buff[256]){
 			stdio_c(char_buff[i]);
 		}
 		stdio_c('\n');
-	}else if(strcmp(command,"mkdir")){
+	}else if(strcmp(command,"mkdir")==0){
 		i++;
 		mkdir(char_buff, i);
-	}else if(strcmp(command,"clear")==0){
+	}else if(strcmp(char_buff,"clear")==0){
 		video_clrscr();
-	}else if(command[0]==0){
+	}else if(char_buff[0]==0){
 		
-	}else if(strcmp(command,"kelp")==0){
+	}else if(strcmp(char_buff,"kelp")==0){
 		stdio_write("Who lives in a pineapple under the sea?\n");
 	}else{
-		switch((command[0] + get_rnd()) & 0x1f){
+		switch((char_buff[0] + get_rnd()) & 0x1f){
 			case 0:
 				stdio_write("Have you been into Branko's rakija?\n");
 				break;
@@ -297,11 +297,9 @@ void screen_splash(uint32_t color){
 }
 
 void mkdir(uint8_t char_buff[256], uint8_t i){
-	uint8_t * data;
-	fl_erase_4k(0x00);
-	fl_write_4k(0x00, "TEST");
-	fl_read_4k(0x00, data);
-	stdio_write(data);
+	flash_write(0xffff0000, 49);
+	stdio_c(flash_read(0xffff0000));
+	stdio_c('\n');
 }
 
 
@@ -309,7 +307,30 @@ void mkdir(uint8_t char_buff[256], uint8_t i){
 
 
 
+/*
 
+else if(strcmp(command,"rmdir")==0){
+
+}else if(strcmp(command,"pwd")==0){
+
+}else if(strcmp(command,"cd")==0){
+
+}else if(strcmp(command,"rm")==0){
+
+}else if(strcmp(command,"mv")==0){
+
+}else if(strcmp(command,"ls")==0){
+
+}else if(strcmp(command,"cp")==0){
+
+}else if(strcmp(command,"cat")==0){
+
+}else if(strcmp(command,"man")==0){
+
+}
+
+
+*/
 
 
 

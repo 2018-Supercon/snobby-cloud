@@ -153,4 +153,12 @@ uint8_t rx_read (void);
 void tx_write (uint8_t data);
 
 
+
+
+uint8_t flash_read(uint32_t addr);
+void flash_write(uint32_t addr, uint8_t data);
+
+
+
+
 #endif
