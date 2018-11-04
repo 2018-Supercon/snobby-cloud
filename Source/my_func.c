@@ -297,8 +297,17 @@ void screen_splash(uint32_t color){
 }
 
 void mkdir(uint8_t char_buff[256], uint8_t i){
-	flash_write(0xffff0000, 49);
-	stdio_c(flash_read(0xffff0000));
+	uint8_t data[4096] = {0};
+	fl_write_4k(0x02f0000, data);
+	data[0] = 'T';
+	fl_write_4k(0x02f0000, data);
+	uint8_t derp[4096] = {0};
+	fl_read_4k(0x02f0000, derp);
+	
+	uint8_t p = 0;
+	while(derp[p] != 0){
+		stdio_c(derp[p]);
+	}
 	stdio_c('\n');
 }
 
