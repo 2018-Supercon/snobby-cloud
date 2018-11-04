@@ -1,6 +1,41 @@
 #include "my_func.h"
 
 void call_command(uint8_t char_buff[256]){
+	uint8_t command[7] = {'\0'};
+	uint8_t i;
+	for(i=0;i<7;++i){
+		if(char_buff[i] == ' '){
+			break;
+		}else{
+			command[i] = char_buff[i];
+		}
+	}
+	if(strcmp(command,"echo") == 0){
+		while(char_buff[i] != '\0'){
+			stdio_c(char_buff[i]);
+		}
+	}else if(strcmp(command,"mkdir")){
+
+	}else if(strcmp(command,"rmdir")){
+
+	}else if(strcmp(command,"pwd")){
+
+	}else if(strcmp(command,"cd")){
+
+	}else if(strcmp(command,"rm")){
+
+	}else if(strcmp(comand,"mv")){
+
+	}else if(strcmp(command,"ls")){
+
+	}else if(strcmp(command,"cp")){
+
+	}else if(strcmp(command,"cat")){
+
+	}else if(strcmp(command,"man")){
+
+	}
+
 	if(strcmp(char_buff,"clear")==0){
 		video_clrscr();
 	}else if(char_buff[0]==0){
@@ -107,45 +142,7 @@ void call_command(uint8_t char_buff[256]){
 				break;
 		};
 	}
-<<<<<<< HEAD
-	
-	uint8_t command[7] = {'\0'};
-	uint8_t i;
-	for(i=0;i<7;++i){
-		if(char_buff[i] == ' '){
-			break;
-		}else{
-			command[i] = char_buff[i];
-		}
-	}
 
-	if(strcmp(command,"echo") == 0){
-		while(char_buff[i] != '\0'){
-			stdio_c(char_buff[i]);
-		}
-	}else if(strcmp(command,"mkdir")){
-
-	}else if(strcmp(command,"rmdir")){
-
-	}else if(strcmp(command,"pwd")){
-
-	}else if(strcmp(command,"cd")){
-
-	}else if(strcmp(command,"rm")){
-
-	}else if(strcmp(comand,"mv")){
-
-	}else if(strcmp(command,"ls")){
-
-	}else if(strcmp(command,"cp")){
-
-	}else if(strcmp(command,"cat")){
-
-	}else if(strcmp(command,"man")){
-
-	}
-=======
->>>>>>> af37dd4eea68f4cbb07117d069c90b63d06bf571
 }
 
 void animate_splash(void){
