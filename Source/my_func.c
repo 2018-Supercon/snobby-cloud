@@ -304,6 +304,7 @@ void mkdir(uint8_t char_buff[256], uint8_t i){
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -338,6 +339,8 @@ else if(strcmp(command,"rmdir")==0){
 
 
 
+=======
+>>>>>>> 2a9e18bc42cb3ba3086cb25a003cc7ab010a1f00
 /* void powr_toggle(){
 	volatile int8_t brk_key,stdio_src;
 	if (K_PWR==0 && LCD_PWR == 0){
