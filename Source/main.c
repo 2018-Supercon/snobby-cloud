@@ -25,26 +25,19 @@ int16_t main(void){
 			if (get_stat!=0){
 				if(char_out!=K_ENT){
 					char_buff[single_char] = char_out;
-				}
-				if(single_char >= 0 && char_out!=BACKSPACE){
-					stdio_c(char_out);
-					single_char++;
-				}else if(single_char > 0 && char_out==BACKSPACE){
-					stdio_c(char_out);
-					single_char--;
+					if(single_char >= 0 && char_out!=BACKSPACE){
+						stdio_c(char_out);
+						single_char++;
+					}else if(single_char > 0 && char_out==BACKSPACE){
+						stdio_c(char_out);
+						single_char--;
+					}
+				}else{
+					stdio_c('\n');
 				}
 			}
-		}while(char_out!=K_ENT);
-		// int i;
-		// for(i=0; i<single_char; i++){
-			// stdio_c(char_buff[i]);
-		// }
-		// stdio_c('\n');
-		
-		
+		}while(char_out!=K_ENT);		
 		call_command(char_buff);
-		
-		
 	}while(1);
 }
 
