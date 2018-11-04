@@ -16,7 +16,7 @@ void call_command(uint8_t char_buff[256]){
 			stdio_c(char_buff[i]);
 		}
 		stdio_c('\n');
-	}else if(strcmp(command,"mkdir")){
+	}else if(strcmp(command,"mkdir")==0){
 		i++;
 		mkdir(char_buff, i);
 	}else if(strcmp(command,"clear")==0){
@@ -303,17 +303,6 @@ void mkdir(uint8_t char_buff[256], uint8_t i){
 	fl_read_4k(0x00, data);
 	stdio_write(data);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
