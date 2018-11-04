@@ -11,7 +11,7 @@ int16_t main(void){
 	hw_init();
 	badge_init();
 	
-	boot_animation();
+	//boot_animation();
 	
 	
 	stdio_write("Welcome to Snobby Cloud!\n");

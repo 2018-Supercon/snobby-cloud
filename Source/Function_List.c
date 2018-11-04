@@ -55,6 +55,15 @@ hard_func				serial_flush(void);																		// Clear data on serial
 hard_func				rx_sta(void);																			// ?? Checks if data on serial ??
 hard_func				rx_read(void);																			// Read data on serial receive
 hard_func				tx_write(uint8_t data);																	// Write data to serial transmit
+hard_func				fl_rdsr(void)																			// 
+hard_func				fl_rdid(void)																			// 
+hard_func				fl_read_4k(uint32_t  addr, uint8_t * data)												// Read 4kbytes from address addr 
+hard_func				fl_read_nk(uint32_t  addr, uint8_t * data, uint16_t n)									// 
+hard_func				fl_erase_4k(uint32_t  addr)																// 
+hard_func				fl_write(uint32_t  addr,uint8_t data)													// 
+hard_func				fl_rst_pb(void)																			// 
+hard_func				fl_wren(void)																			// 
+hard_func				fl_write_4k(uint32_t  addr, uint8_t * data)												// 
 ----------------------- --------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------------------------------
 // From disp.h
 initialize				TFT_24_7789_Init(void);																	// Initialize the display

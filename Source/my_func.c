@@ -1,9 +1,9 @@
 #include "my_func.h"
 
 void call_command(uint8_t char_buff[256]){
-	uint8_t command[7] = {'\0'};
+	uint8_t command[16] = {0};
 	uint8_t i;
-	for(i=0;i<7;++i){
+	for(i=0;i<16;++i){
 		if(char_buff[i] == ' '){
 			break;
 		}else{
@@ -11,39 +11,22 @@ void call_command(uint8_t char_buff[256]){
 		}
 	}
 	if(strcmp(command,"echo") == 0){
-		while(char_buff[i] != '\0'){
+		while(char_buff[i] != 0){
+			i++;
 			stdio_c(char_buff[i]);
 		}
+		stdio_c('\n');
 	}else if(strcmp(command,"mkdir")){
-
-	}else if(strcmp(command,"rmdir")){
-
-	}else if(strcmp(command,"pwd")){
-
-	}else if(strcmp(command,"cd")){
-
-	}else if(strcmp(command,"rm")){
-
-	}else if(strcmp(comand,"mv")){
-
-	}else if(strcmp(command,"ls")){
-
-	}else if(strcmp(command,"cp")){
-
-	}else if(strcmp(command,"cat")){
-
-	}else if(strcmp(command,"man")){
-
-	}
-
-	if(strcmp(char_buff,"clear")==0){
+		i++;
+		mkdir(char_buff, i);
+	}else if(strcmp(command,"clear")==0){
 		video_clrscr();
-	}else if(char_buff[0]==0){
+	}else if(command[0]==0){
 		
-	}else if(strcmp(char_buff,"kelp")==0){
+	}else if(strcmp(command,"kelp")==0){
 		stdio_write("Who lives in a pineapple under the sea?\n");
 	}else{
-		switch((char_buff[0] + get_rnd()) & 0x1f){
+		switch((command[0] + get_rnd()) & 0x1f){
 			case 0:
 				stdio_write("Have you been into Branko's rakija?\n");
 				break;
@@ -144,7 +127,6 @@ void call_command(uint8_t char_buff[256]){
 	}
 
 }
-
 void animate_splash(void){
 	wait_ms(750);
 	uint16_t i;
@@ -168,9 +150,6 @@ void animate_splash(void){
 	// sound_play_notes(71, 74, 79, 75);
 	tft_fill_area(0,0,320,240,0x000000);
 }
-
-
-
 void screen_splash(uint32_t color){
 	uint8_t size = 4, offseth = 100, offsetw = 120;
 	tft_fill_area(offsetw+(size*3), offseth+(size*1), size, size, color);
@@ -316,6 +295,25 @@ void screen_splash(uint32_t color){
 	tft_fill_area(offsetw+(size*17), offseth+(size*10), size, size, color);
 	tft_fill_area(offsetw+(size*18), offseth+(size*10), size, size, color);
 }
+
+void mkdir(uint8_t char_buff[256], uint8_t i){
+	uint8_t * data;
+	fl_erase_4k(0x00);
+	fl_write_4k(0x00, "TEST");
+	fl_read_4k(0x00, data);
+	stdio_write(data);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
