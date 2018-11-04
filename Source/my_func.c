@@ -8,9 +8,9 @@ void call_command(uint8_t char_buff[256]){
 	}else if(strcmp(char_buff,"kelp")==0){
 		stdio_write("Who lives in a pineapple under the sea?\n");
 	}else{
-		switch((char_buff[0] + get_rnd()) & 0x07){
+		switch((char_buff[0] + get_rnd()) & 0x1f){
 			case 0:
-				stdio_write("Make your own sandwich\n");
+				stdio_write("Have you been into Branko's rakija?\n");
 				break;
 			case 1:
 				stdio_write("Existence itself is not a hack\n");
@@ -33,17 +33,80 @@ void call_command(uint8_t char_buff[256]){
 			case 7:
 				stdio_write("Who do you think you are?! I AM!!!!!\n");
 				break;
+			case 8:
+				stdio_write("Prove you're human: 0b101010\n");
+				break;
+			case 9:
+				stdio_write("I don't think that mean what you think it means.\n");
+				break;
+			case 10:
+				stdio_write("Want to play a game?\n");
+				break;
+			case 11:
+				stdio_write("How do I get 30 extra lives?\n");
+				break;
+			case 12:
+				stdio_write("Maybe you should RTFM\n");
+				break;
+			case 13:
+				stdio_write("Erm... It's supposed to do that\n");
+				break;
+			case 14:
+				stdio_write("Too many errors on one line (make fewer)\n");
+				break;
+			case 15:
+				stdio_write("You are in a maze of twisty compiler features, all different\n");
+				break;
+			case 16:
+				stdio_write("Parse error: unexpected idoiot at the keyboard\n");
+				break;
+			case 17:
+				stdio_write("Program Lost -- Sorry.\n");
+				break;
+			case 18:
+				stdio_write("I find your lack of faith disturbing\n");
+				break;
+			case 19:
+				stdio_write("There are people who know what they're doing, then there's you\n");
+				break;
+			case 20:
+				stdio_write("My brain just exploded.\n");
+				break;
+			case 21:
+				stdio_write("You can't just start making up commands\n");
+				break;
+			case 22:
+				stdio_write("Try restarting shockwave\n");
+				break;
+			case 23:
+				stdio_write("That really grinds my ALU\n");
+				break;
+			case 24:
+				stdio_write("Erq ureevat\n");
+				break;
+			case 25:
+				stdio_write("I'm drawing a blank\n");
+				break;
+			case 26:
+				stdio_write("Make your own sandwich\n");
+				break;
+			case 27:
+				stdio_write("No Thanks...\n");
+				break;
+			case 28:
+				stdio_write("I call myself SuperBoss\n");
+				break;
+			case 29:
+				stdio_write("You are as useless as a white crayon\n");
+				break;
+			case 30:
+				stdio_write("See a doctor. You may not be fit to work a computer\n");
+				break;
+			case 31:
+				stdio_write("No. Just No\n");
+				break;
 		};
 	}
-	
-	
-	
-	
-
-	
-	
-	
-	
 }
 
 void animate_splash(void){
