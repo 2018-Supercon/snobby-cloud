@@ -159,6 +159,6 @@ uint8_t flash_read(uint32_t addr);
 void flash_write(uint32_t addr, uint8_t data);
 
 
-
+void powr_toggle();
 
 #endif

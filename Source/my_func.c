@@ -1,6 +1,6 @@
 #include "my_func.h"
 
-void call_command(uint8_t char_buff[256]){
+void call_command(uint8_t char_buff[256], struct file filesys[FILES]){
 	uint8_t command[16] = {0};
 	uint8_t i;
 	for(i=0;i<16;++i){
@@ -16,9 +16,34 @@ void call_command(uint8_t char_buff[256]){
 			stdio_c(char_buff[i]);
 		}
 		stdio_c('\n');
-	}else if(strcmp(command,"mkdir")==0){
+	}else if(strcmp(command,"touch")==0){
 		i++;
-		mkdir(char_buff, i);
+		touch(char_buff, i, filesys);
+	}else if(strcmp(command,"ls")==0){
+		ls(filesys);
+	}else if(strcmp(command,"rm")==0){
+		i++;
+		rm(char_buff, i, filesys);
+	}else if(strcmp(command,"help")==0){
+		help();
+	}else if(strcmp(command,"?")==0){
+		help();
+	}else if(strcmp(command,"write")==0){
+		i++;
+		uint8_t index;
+		index = find(char_buff, i, filesys);
+		write(filesys, index);
+	}else if(strcmp(command,"cat")==0){
+		i++;
+		uint8_t index;
+		index = find(char_buff, i, filesys);
+		cat(filesys, index);
+	}else if(strcmp(command,"find")==0){
+		i++;
+		uint8_t index;
+		index= find(char_buff, i, filesys);
+		stdio_write(filesys[index].name);
+		stdio_write(" \n");
 	}else if(strcmp(char_buff,"clear")==0){
 		video_clrscr();
 	}else if(char_buff[0]==0){
@@ -128,9 +153,9 @@ void call_command(uint8_t char_buff[256]){
 
 }
 void animate_splash(void){
-	wait_ms(750);
 	uint16_t i;
-	for(i=0; i<800; i++){
+	for(i=0; i<500; i++){
+		powr_toggle();
 		tft_fill_area((get_rnd() & 0x1ff), (get_rnd() & 0xff), (get_rnd() & 0x09), (get_rnd() & 0x09), (get_rnd()<<16 | get_rnd()));
 		uint8_t col = (get_rnd() & 0x01);
 		if(col == 1){
@@ -138,16 +163,17 @@ void animate_splash(void){
 		}else{
 			screen_splash(0xffffffff);
 		}
-		wait_ms((get_rnd() & 0x01));
 	}
+	// sound_play_notes(0, 0, 60, 1000);
+	// sound_play_notes(0, 0, 67, 1000);
+	// sound_play_notes(0, 0, 72, 1050);
+	// sound_play_notes(63, 72, 75, 200);
+	// sound_play_notes(64, 72, 76, 1000);
 	tft_fill_area(0,0,320,240,0xffffffff);
 	screen_splash(0);
 	wait_ms(250);
 	tft_fill_area(0,0,320,240,0);
 	screen_splash(0xffffffff);
-	// sound_play_notes(72, 75, 79, 75);
-	// sound_play_notes(72, 77, 80, 75);
-	// sound_play_notes(71, 74, 79, 75);
 	tft_fill_area(0,0,320,240,0x000000);
 }
 void screen_splash(uint32_t color){
@@ -296,51 +322,116 @@ void screen_splash(uint32_t color){
 	tft_fill_area(offsetw+(size*18), offseth+(size*10), size, size, color);
 }
 
-void mkdir(uint8_t char_buff[256], uint8_t i){
-	uint8_t data[4096] = {0};
-	fl_write_4k(0x02f0000, data);
-	data[0] = 'T';
-	fl_write_4k(0x02f0000, data);
-	uint8_t derp[4096] = {0};
-	fl_read_4k(0x02f0000, derp);
-	
-	uint8_t p = 0;
-	while(derp[p] != 0){
-		stdio_c(derp[p]);
+void touch(uint8_t char_buff[256], uint8_t i, struct file filesys[FILES]){
+	uint8_t p, w = 0, j, count;
+
+	for(p=0; p<FILES; p++){
+		count = 0;
+		for(j=0; j<16; j++){
+			if(filesys[p].name[j] == char_buff[i+j]){
+				count++;
+			}
+		}
+	}
+	if(count!=16 || filesys[0].name[0]==0){
+		for(p=0; p<FILES; p++){
+			if(filesys[p].name[0] == 0){
+				while(char_buff[i+w] != 0){
+					filesys[p].name[w] = char_buff[i+w];
+					w++;
+				}
+				break;
+			}
+		}
+	}
+}
+void ls(struct file filesys[FILES]){
+	uint8_t w;
+	for(w=0; w<FILES; w++){
+		if(filesys[w].name[0] != 0){
+			stdio_write(filesys[w].name);
+			stdio_c('\n');
+		}
+	}
+}
+void rm(uint8_t char_buff[256], uint8_t i, struct file filesys[FILES]){
+	uint8_t p, j, count;
+	for(p=0; p<FILES; p++){
+		count = 0;
+		for(j=0; j<16; j++){
+			if(filesys[p].name[j] == char_buff[i+j]){
+				count++;
+			}
+		}
+		if(count==16){
+			filesys[p].name[0] = 0;
+		}
+	}
+}
+uint8_t find(uint8_t char_buff[256], uint8_t i, struct file filesys[FILES]){
+	uint8_t p, j, count;
+	for(p=0; p<FILES; p++){
+		count = 0;
+		for(j=0; j<16; j++){
+			if(filesys[p].name[j] == char_buff[i+j]){
+				count++;
+			}
+		}
+		if(count==16){
+			return p;
+		}
+	}
+	return 255;
+}
+void write(struct file filesys[FILES], uint8_t index){
+	uint8_t charbs = 0, statsget = 0, singchar, data_buff[256] = {0};
+	do{
+		powr_toggle();
+		statsget = stdio_get(&charbs);
+		if (statsget!=0){
+			if(charbs!=K_ENT){
+				data_buff[singchar] = charbs;
+				if(singchar >= 0 && charbs!=BACKSPACE){
+					stdio_c(charbs);
+					singchar++;
+				}else if(singchar > 0 && charbs==BACKSPACE){
+					stdio_c(charbs);
+					singchar--;
+				}
+			}else{
+				stdio_c('\n');
+			}
+		}
+	}while(charbs!=K_ENT);
+	uint8_t hsh =0;
+	while(data_buff[hsh] != 0){
+		filesys[index].data[hsh] = data_buff[hsh];
+		hsh++;
+	}
+}
+void cat(struct file filesys[FILES], uint8_t index){
+	uint8_t hsh =0;
+	while(filesys[index].data[hsh] != 0){
+		stdio_c(filesys[index].data[hsh]);
+		hsh++;
 	}
 	stdio_c('\n');
 }
-
-
-
-
-
-
-
-/*
-
-else if(strcmp(command,"rmdir")==0){
-
-}else if(strcmp(command,"pwd")==0){
-
-}else if(strcmp(command,"cd")==0){
-
-}else if(strcmp(command,"rm")==0){
-
-}else if(strcmp(command,"mv")==0){
-
-}else if(strcmp(command,"ls")==0){
-
-}else if(strcmp(command,"cp")==0){
-
-}else if(strcmp(command,"cat")==0){
-
-}else if(strcmp(command,"man")==0){
-
+void help(void){
+	stdio_write("\n");
+	stdio_write("clear - clears the screen\n");
+	stdio_write("echo  - prints to the screen\n");
+	stdio_write("rm    - removes a file\n");
+	stdio_write("touch - creates a new file\n");
+	stdio_write("ls    - list all files\n");
+	stdio_write("write - write to file\n");
+	stdio_write("find  - finds a file\n");
+	stdio_write("cat   - prints a file\n");
+	stdio_write("help  - displays this help message\n");
+	stdio_write("\n");
 }
 
 
-*/
 
 
 
@@ -348,48 +439,3 @@ else if(strcmp(command,"rmdir")==0){
 
 
 
-
-/* void powr_toggle(){
-	volatile int8_t brk_key,stdio_src;
-	if (K_PWR==0 && LCD_PWR == 0){
-		while(K_PWR==0){
-			wait_ms(100);
-		}
-		hw_sleep();
-		wait_ms(30);
-		while (K_PWR==0){
-			wait_ms(300);	
-		}
-	}
-	// if(K_PWR==0 && LCD_PWR == 1){
-		// while(K_PWR==0){
-			// wait_ms(100);
-		// }
-		// hw_init();
-		// badge_init();
-		// wait_ms(30);
-		// while (K_PWR==0){
-			// wait_ms(300);	
-		// }
-	// }
-	static uint8_t brk_is_pressed;
-	if (KEY_BRK==0){
-		if (brk_is_pressed==9){
-			if ((K_SHIFTL==0)&(K_SHIFTR==0)){
-				serial_flush();
-				if (stdio_src == STDIO_TTY1){
-					stdio_src = STDIO_LOCAL;
-				}else{
-					stdio_src = STDIO_TTY1;
-				}
-			}else{
-				brk_key = 1;
-			}
-		}
-		if (brk_is_pressed<10){
-			brk_is_pressed++;
-		}
-	}else{
-		brk_is_pressed = 0;
-	}
-} */

@@ -10,23 +10,25 @@ This is more of a filesystem navigation emulator for now because it doesnt have 
 
 Supported Commands:
 - clear
+- echo
+- rm
+- touch
+- ls
+- write
+- find
+- cat
 
 Commands to Add: (in order of how likely it is to be added)
-- echo
 - mkdir
 - rmdir
 - pwd
 - cd
-- rm
 - mv
-- ls
 - cp
-- cat
+
 - man
 
-- touch
 - tail
 - grep
-- find/locate
 - df
 - whoami

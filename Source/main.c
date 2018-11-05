@@ -10,8 +10,8 @@ uint8_t char_out, get_stat, single_char;
 int16_t main(void){
 	hw_init();
 	badge_init();
-	
-	//boot_animation();
+	wait_ms(500);
+	boot_animation();
 	
 	
 	stdio_write("Welcome to Snobby Cloud!\n");
@@ -21,6 +21,7 @@ int16_t main(void){
 		single_char = 0;
 		char_out = 0;
 		do{
+			powr_toggle();
 			get_stat = stdio_get(&char_out);
 			if (get_stat!=0){
 				if(char_out!=K_ENT){
@@ -37,7 +38,7 @@ int16_t main(void){
 				}
 			}
 		}while(char_out!=K_ENT);		
-		call_command(char_buff);
+		call_command(char_buff, filesys);
 	}while(1);
 }
 

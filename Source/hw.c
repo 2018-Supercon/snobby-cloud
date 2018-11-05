@@ -64,7 +64,8 @@ int8_t key_char;
 
 const uint16_t tone_pr_table[128] = {
 	0, //No Note
-	0, //366927, // 0 | C-1 | 8.176Hz
+	/* Sacrifice this for 0 to be 'no note' 366927, // 0 | C-1 | 8.176Hz */
+	/* Lowest notes have timer values too big for uint16_t so setting to 0 as workaround*/
 	0, //346340, // 1 | C?/D?-1 | 8.662Hz
 	0, //326904, // 2 | D-1 | 9.177Hz
 	0, //308546, // 3 | E?/D?-1 | 9.723Hz
@@ -191,6 +192,7 @@ const uint16_t tone_pr_table[128] = {
 	284, // 124 | E9 | 10548.1Hz
 	268, // 125 | F9 | 11175.3Hz
 	253, // 126 | F?/G?9 | 11839.8Hz
+	239, // 127 | G9 | 12543.9Hz
 };
 	
 uint8_t get_led_word(void){
@@ -783,4 +785,39 @@ void flash_write(uint32_t addr, uint8_t data){
 	SPI_dat((addr>>0)&0xFF);
 	SPI_dat(data);
 	CS_FLASH = 1;
+}
+
+
+void powr_toggle(){
+	volatile int8_t brk_key,stdio_src;
+	if (K_PWR==0 && LCD_PWR == 0){
+		while(K_PWR==0){
+			wait_ms(100);
+		}
+		hw_sleep();
+		wait_ms(30);
+		while (K_PWR==0){
+			wait_ms(300);	
+		}
+	}
+	static uint8_t brk_is_pressed;
+	if (KEY_BRK==0){
+		if (brk_is_pressed==9){
+			if ((K_SHIFTL==0)&(K_SHIFTR==0)){
+				serial_flush();
+				if (stdio_src == STDIO_TTY1){
+					stdio_src = STDIO_LOCAL;
+				}else{
+					stdio_src = STDIO_TTY1;
+				}
+			}else{
+				brk_key = 1;
+			}
+		}
+		if (brk_is_pressed<10){
+			brk_is_pressed++;
+		}
+	}else{
+		brk_is_pressed = 0;
+	}
 }
