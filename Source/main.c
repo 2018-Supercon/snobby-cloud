@@ -14,7 +14,7 @@ int16_t main(void){
 	boot_animation();
 	
 	
-	stdio_write("Welcome to Snobby Cloud!\n");
+	stdio_write("Welcome to Snobby Cloud Picnux!\n");
 	do{
 		uint8_t char_buff[256] = {0};
 		stdio_write("> ");

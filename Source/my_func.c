@@ -154,7 +154,7 @@ void call_command(uint8_t char_buff[256], struct file filesys[FILES]){
 }
 void animate_splash(void){
 	uint16_t i;
-	for(i=0; i<500; i++){
+	for(i=0; i<800; i++){
 		powr_toggle();
 		tft_fill_area((get_rnd() & 0x1ff), (get_rnd() & 0xff), (get_rnd() & 0x09), (get_rnd() & 0x09), (get_rnd()<<16 | get_rnd()));
 		uint8_t col = (get_rnd() & 0x01);
