@@ -79,6 +79,8 @@
 #define		EXP_3_OUT	LATBbits.LATB1
 #define		EXP_3_T		TRISBbits.TRISB1
 
+#define		FLOAT_PIN	PORTCbits.RC12			// added floating pin to help generate randomness
+
 
 void wait_1ms (void);
 void wait_ms (uint32_t count);
@@ -152,7 +154,8 @@ uint8_t rx_sta (void);
 uint8_t rx_read (void);
 void tx_write (uint8_t data);
 
-
+void fl_rst_pb(void);
+void fl_wren(void);
 
 
 uint8_t flash_read(uint32_t addr);

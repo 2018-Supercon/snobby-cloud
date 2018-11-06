@@ -560,7 +560,7 @@ unsigned char	SPI_dat (uint8_t data){
 uint16_t get_rnd (void){
 	uint32_t  var;
 	static uint32_t  var_prev;
-	var = rnd_var1/2 + rnd_var2 + rnd_var3 + (var_prev*1103515245) + 12345 + (millis() | 0xffff);
+	var = rnd_var1 + rnd_var2 + rnd_var3 + (var_prev*1103515245) + 12345 + ((millis()*(EXP_2_IN + FLOAT_PIN + EXP_3_IN)^FLOAT_PIN) & 0xffff); // More Randomness Based on Environment
 	var = var & 0xFFFF;
 	var_prev = var;
 	return var;
