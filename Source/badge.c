@@ -33,7 +33,7 @@ void badge_init (void){
 	stdio_src = STDIO_LOCAL;
 	// stdio_src = STDIO_TTY1;
 	term_init();
-	set_cursor_state(1);
+	set_cursor_state(0);
 }
 
 //B_BDG004
@@ -187,6 +187,7 @@ void stdio_local_buffer_puts (int8_t * data){
 void __ISR(_TIMER_5_VECTOR, IPL3AUTO) Timer5Handler(void){
     uint8_t key_temp;
     IFS0bits.T5IF = 0;
+	disp_tasks();
     if (handle_display){
 		tft_disp_buffer_refresh_part((uint8_t *)(disp_buffer),(uint8_t *)color_buffer);
 	}

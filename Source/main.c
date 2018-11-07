@@ -11,7 +11,10 @@ int16_t main(void){
 	hw_init();
 	badge_init();
 	wait_ms(500);
-	boot_animation();
+	if (K_SHIFTR==1){
+		boot_animation();
+	}
+	set_cursor_state(1);
 	
 	
 	stdio_write("Welcome to Snobby Cloud Picnux!\n");
