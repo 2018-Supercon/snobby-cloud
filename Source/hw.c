@@ -443,10 +443,10 @@ void hw_init (void){
     IEC0bits.T1IE = 1;
     IPC1bits.T1IP = 4;
 	
-	// sound_set_generator(0,0);		// Sound Stripped
-	// sound_set_generator(0,1);		// Sound Stripped
-	// sound_set_generator(0,2);		// Sound Stripped
-	// GEN_ENABLE = 1;					// Sound Stripped
+	sound_set_generator(0,0);
+	sound_set_generator(0,1);
+	sound_set_generator(0,2);
+	GEN_ENABLE = 1;			
     INTEnableSystemMultiVectoredInt();
 	
 	wait_ms(50);
