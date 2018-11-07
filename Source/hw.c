@@ -800,24 +800,4 @@ void powr_toggle(){
 			wait_ms(300);	
 		}
 	}
-	static uint8_t brk_is_pressed;
-	if (KEY_BRK==0){
-		if (brk_is_pressed==9){
-			if ((K_SHIFTL==0)&(K_SHIFTR==0)){
-				serial_flush();
-				if (stdio_src == STDIO_TTY1){
-					stdio_src = STDIO_LOCAL;
-				}else{
-					stdio_src = STDIO_TTY1;
-				}
-			}else{
-				brk_key = 1;
-			}
-		}
-		if (brk_is_pressed<10){
-			brk_is_pressed++;
-		}
-	}else{
-		brk_is_pressed = 0;
-	}
 }
