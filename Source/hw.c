@@ -788,9 +788,9 @@ void flash_write(uint32_t addr, uint8_t data){
 }
 
 
-void powr_toggle(){
+void powr_toggle(uint8_t pwrstate){
 	volatile int8_t brk_key,stdio_src;
-	if (K_PWR==0 && LCD_PWR == 0){
+	if ((K_PWR==0 && LCD_PWR == 0) || pwrstate == 0){
 		while(K_PWR==0){
 			wait_ms(100);
 		}

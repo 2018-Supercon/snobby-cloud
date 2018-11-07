@@ -44,6 +44,8 @@ void call_command(uint8_t char_buff[256], struct file filesys[FILES]){
 		index= find(char_buff, i, filesys);
 		stdio_write(filesys[index].name);
 		stdio_write(" \n");
+	}else if(strcmp(char_buff,"halt")==0){
+		powr_toggle(0);
 	}else if(strcmp(char_buff,"clear")==0){
 		video_clrscr();
 	}else if(char_buff[0]==0){
@@ -155,7 +157,7 @@ void call_command(uint8_t char_buff[256], struct file filesys[FILES]){
 void animate_splash(void){
 	uint16_t i;
 	for(i=0; i<800; i++){
-		powr_toggle();
+		powr_toggle(45);
 		tft_fill_area((get_rnd() & 0x1ff), (get_rnd() & 0xff), (get_rnd() & 0x09), (get_rnd() & 0x09), (get_rnd()<<16 | get_rnd()));
 		uint8_t col = (get_rnd() & 0x01);
 		if(col == 1){
@@ -386,7 +388,7 @@ uint8_t find(uint8_t char_buff[256], uint8_t i, struct file filesys[FILES]){
 void write(struct file filesys[FILES], uint8_t index){
 	uint8_t charbs = 0, statsget = 0, singchar, data_buff[256] = {0};
 	do{
-		powr_toggle();
+		powr_toggle(45);
 		statsget = stdio_get(&charbs);
 		if (statsget!=0){
 			if(charbs!=K_ENT){

@@ -21,7 +21,7 @@ int16_t main(void){
 		single_char = 0;
 		char_out = 0;
 		do{
-			powr_toggle();
+			powr_toggle(45);
 			get_stat = stdio_get(&char_out);
 			if (get_stat!=0){
 				if(char_out!=K_ENT){
