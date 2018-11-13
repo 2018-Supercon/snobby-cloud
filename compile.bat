@@ -40,21 +40,22 @@ IF %COMPILE% EQU 1 (
 	echo --------------------------------------Done--------------------------------------
 	IF %PAUSE_AFTER_EACH% EQU 1 (
 		pause
-	) ELSE ( 
+	) ELSE (
 		echo.
 	)
 )
-pause
+
 IF %CONVERT% EQU 1 (
 	echo -----------------------------Converting to Hex File-----------------------------
 	cd %BIN_PATH%
 	%HEX_CONVERTER% %OUTPUT_NAME%%INTERM_TYPE%
 	cd ..\
 	echo.
+	cd ..\
 	echo --------------------------------------Done--------------------------------------
 	IF %PAUSE_AFTER_EACH% EQU 1 (
 		pause
-	) ELSE ( 
+	) ELSE (
 		echo.
 	)
 )
@@ -68,7 +69,7 @@ IF %UPLOAD% EQU 1 (
 	echo --------------------------------------Done--------------------------------------
 	IF %PAUSE_AFTER_EACH% EQU 1 (
 		pause
-	) ELSE ( 
+	) ELSE (
 		echo.
 	)
 )
@@ -76,4 +77,4 @@ IF %UPLOAD% EQU 1 (
 echo --------------------------------Compile Finished--------------------------------
 IF %PAUSE_PRE_EXIT% EQU 1 (
 	pause
-) 
+)
