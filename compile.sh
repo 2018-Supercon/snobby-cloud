@@ -79,4 +79,4 @@ fi
 echo --------------------------------Compile Finished--------------------------------
 if [ $PAUSE_PRE_EXIT == 1 ]; then
 	read -n1 -r -p "Press any key to continue..." && echo ''
-)
+fi
