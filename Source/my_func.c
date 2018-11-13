@@ -387,6 +387,7 @@ uint8_t find(uint8_t char_buff[256], uint8_t i, struct file filesys[FILES]){
 }
 void write(struct file filesys[FILES], uint8_t index){
 	uint8_t charbs = 0, statsget = 0, singchar, data_buff[256] = {0};
+	stdio_write("# ");
 	do{
 		powr_toggle(45);
 		statsget = stdio_get(&charbs);
