@@ -13,8 +13,8 @@ CONVERT=0
 UPLOAD=1
 
 # Stuff for compilation
-COMPILER=xc32-gcc.exe
-HEX_CONVERTER=xc32-bin2hex.exe
+COMPILER=xc32-gcc
+HEX_CONVERTER=xc32-bin2hex
 INTERM_TYPE=.elf
 OUTPUT_TYPE=.hex
 PROCESSOR=32MX370F512H
@@ -24,7 +24,7 @@ SRC_PATH=Source
 BIN_PATH=Compiled
 
 # Stuff for writing to badge
-BADGE_WRITER=pic32prog.exe
+BADGE_WRITER=pic32prog
 COMPORT=/dev/ttyUSB0
 
 # Name of the executable
