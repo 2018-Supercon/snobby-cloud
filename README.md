@@ -20,7 +20,7 @@ Supported Commands:
 - ls
 - write
 - find
-- cat // still a WIP
+- cat 			// still a WIP
 - help
 
 Commands to Add: (in order of how likely it is to be added)
