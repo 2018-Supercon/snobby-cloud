@@ -65,7 +65,7 @@ fi
 if [ $UPLOAD == 1 ]; then
 	echo --------------------------------Writing to Badge--------------------------------
 	cd $BIN_PATH
-	$BADGE_WRITER -d ascii:$COMPORT $OUTPUT_NAME$OUTPUT_TYPE
+	~/bin/$BADGE_WRITER -d ascii:$COMPORT $OUTPUT_NAME$OUTPUT_TYPE
 	cd ../
 	echo ''
 	echo --------------------------------------Done--------------------------------------
